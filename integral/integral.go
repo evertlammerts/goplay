@@ -7,7 +7,7 @@ import "runtime"
 // The trapezoidal rule works by approximating the region under the graph of
 // the function f(x) as a trapezoid and calculating its area. This implementation
 // computes the height of rectangles based on the center of an interval, rather than
-// the average of the interval's start and end.
+// the average of the interval's start and end
 //
 // numStrips is the number of rectangles that will be used. More rectangles provides
 // more accurate results. Note that since the operation is parallelized over all
