@@ -30,13 +30,6 @@ func TestTrapezoid(t *testing.T) {
 			numStrips:     1e6,
 			intervalStart: 0,
 			intervalEnd:   1,
-			f:             func(x float64) float64 { return x + 10 },
-			want:          10.5,
-		},
-		{
-			numStrips:     1e6,
-			intervalStart: 0,
-			intervalEnd:   1,
 			f:             func(x float64) float64 { return 3*x*x + 10 },
 			want:          11,
 		},
@@ -81,6 +74,13 @@ func TestTrapezoid(t *testing.T) {
 			intervalEnd:   2 * math.Pi,
 			f:             func(x float64) float64 { return math.Sin(x) },
 			want:          0,
+		},
+		{
+			numStrips:     1e6,
+			intervalStart: 0,
+			intervalEnd:   1,
+			f:             func(x float64) float64 { return 4.0 / (1.0 + x*x) },
+			want:          math.Pi,
 		},
 	} {
 		v := Trapezoid(test.numStrips, test.intervalStart, test.intervalEnd, test.f)
