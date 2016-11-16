@@ -87,6 +87,6 @@ func TestTrapezoid(t *testing.T) {
 		if v != test.want && math.Abs(test.want-v) > 1e-10 {
 			t.Errorf("test #%d: got=%v want=%v\n", i, v, test.want)
 		}
-		t.Logf("test #d succesful\n", i)
+		t.Logf("test #%d succesful\n", i)
 	}
 }

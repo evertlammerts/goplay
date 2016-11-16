@@ -1,1 +1,10 @@
 language: go
+
+go:
+ - 1.7
+
+script:
+ - go get -d -t -v ./...
+ - go build -v ./...
+ - go test -cpu 4 -v ./...
+ - diff <(gofmt -d .) <("")
