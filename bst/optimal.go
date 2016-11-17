@@ -1,6 +1,6 @@
 package main
 
-var n int = 1e10
+const n int = 1e6
 
 var (
 	cost [n + 1][n + 1]float64
