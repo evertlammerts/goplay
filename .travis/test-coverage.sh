@@ -1,5 +1,8 @@
 #!/bin/bash
 
+PROFILE_OUT=`pwd`/profile.out
+ACC_OUT=`pwd`/acc.out
+
 testCover() {
 	# set the return value to 1 (succesful)
 	retval=0
@@ -10,11 +13,11 @@ testCover() {
 	# switch to the directory to check
         pushd $d > /dev/null
 	# create the coverage profile
-	coverageresult=`go test -v -coverprofile=profile.out`
+	coverageresult=`go test -v -coverprofile=$PROFILE_OUT`
 	# output the result so we can check the shell output
 	echo ${coverageresult}
 	# append the results to acc.out if coverage didn't fail, else set the retval to 1 (failed)
-	( [[ ${coverageresult} == *FAIL* ]] && retval=1 ) || ( [ -f profile.out ] && grep -v "mode: set" profile.out >> acc.out )
+	( [[ ${coverageresult} == *FAIL* ]] && retval=1 ) || ( [ -f $PROFILE_OUT ] && grep -v "mode: set" $PROFILE_OUT >> $ACC_OUT )
 	# return to our working dir
 	popd > /dev/null
 	# return our return value
@@ -22,11 +25,11 @@ testCover() {
 }
 
 # Init acc.out
-echo "mode: set" > acc.out
+echo "mode: set" > $ACC_OUT
 
 # Run test coverage on all directories containing go files
 find . -maxdepth 10 -type d | while read d; do testCover $d || exit; done
 
 # Upload the coverage profile to coveralls.io
-[ -n "$COVERALLS_TOKEN" ] && goveralls -coverprofile=acc.out -service=travis-ci -repotoken $COVERALLS_TOKEN
+[ -n "$COVERALLS_TOKEN" ] && goveralls -coverprofile=$ACC_OUT -service=travis-ci -repotoken $COVERALLS_TOKEN
 
