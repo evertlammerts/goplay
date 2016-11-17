@@ -1,4 +1,4 @@
-# Multi-Core Parallel Programming in Go [![Build Status](https://travis-ci.org/evertlammerts/mcppg.svg?branch=master)](https://travis-ci.org/evertlammerts/mcppg)
+# Multi-Core Parallel Programming in Go [![Build Status](https://travis-ci.org/evertlammerts/mcppg.svg?branch=master)](https://travis-ci.org/evertlammerts/mcppg) [![Coverage Status](https://coveralls.io/repos/github/evertlammerts/mcppg/badge.svg?branch=master)](https://coveralls.io/github/evertlammerts/mcppg?branch=master)
 
 Implementation of two parallel algorithms described in "[Multi-Core Parallel Programming in Go](http://www.ualr.edu/pxtang/papers/acc10.pdf)" (Peiyi Tang, 2010).
 
