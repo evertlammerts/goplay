@@ -1,12 +1,20 @@
-package main
+package bst
 
-import (
-	"math"
-	"math/rand"
-	"os"
-	"strconv"
-	"time"
-)
+func Sequential(prob []float64) (int, float64) {
+	n := len(prob)
+	var (
+		cost = make([][]float64, n+1)
+		root = make([][]int, n+1)
+	)
+	for i := n; i >= 0; i-- {
+		cost[i] = make([]float64, n+1)
+		root[i] = make([]int, n+1)
+		for j := i; j <= n; j++ {
+			mst(i, j, prob, cost, root)
+		}
+	}
+	return root[0][n], cost[0][n]
+}
 
 func mst(i, j int, prob []float64, cost [][]float64, root [][]int) {
 	var (
@@ -34,48 +42,5 @@ func mst(i, j int, prob []float64, cost [][]float64, root [][]int) {
 		}
 		cost[i][j] = bestCost + psum
 		root[i][j] = bestRoot
-	}
-}
-
-func prob(n int) []float64 {
-	var (
-		prob = make([]float64, n)
-		sum  float64
-		min  float64 = math.MaxFloat64
-	)
-	// Seed the PRNG
-	rand.Seed(time.Now().UnixNano())
-	// Generate float64's on a normal distribution (mean=0, stdev=1)
-	for i := 0; i < n; i++ {
-		prob[i] = rand.NormFloat64()
-		if prob[i] < min {
-			min = prob[i]
-		}
-	}
-	// Normalize to positive numbers
-	for i := 0; i < n; i++ {
-		prob[i] -= min
-		sum += prob[i]
-	}
-	// Turn into probabilities that (appr) sum up to 1
-	for i := 0; i < n; i++ {
-		prob[i] /= sum
-	}
-	return prob
-}
-
-func main() {
-	n, _ := strconv.Atoi(os.Args[1])
-	var (
-		cost = make([][]float64, n+1)
-		root = make([][]int, n+1)
-	)
-	prob := prob(n)
-	for i := n; i >= 0; i-- {
-		cost[i] = make([]float64, n+1)
-		root[i] = make([]int, n+1)
-		for j := i; j <= n; j++ {
-			mst(i, j, prob, cost, root)
-		}
 	}
 }
