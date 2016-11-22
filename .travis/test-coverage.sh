@@ -1,7 +1,7 @@
 #!/bin/bash
 
-PROFILE_OUT=`pwd`/profile.out
-ACC_OUT=`pwd`/acc.out
+PROFILE_OUT=$PWD/profile.out
+ACC_OUT=$PWD/acc.out
 
 testCover() {
 	# set the return value to 0 (succesful)
@@ -17,7 +17,7 @@ testCover() {
 	# output the result so we can check the shell output
 	echo ${coverageresult}
 	# append the results to acc.out if coverage didn't fail, else set the retval to 1 (failed)
-	( [[ ${coverageresult} == *FAIL* ]] && retval=1 ) || ( [ -f $PROFILE_OUT ] && grep -v "mode: set" $PROFILE_OUT >> $ACC_OUT )
+	retval=1 && [[ ${coverageresult} != *FAIL* ]] && grep -v "mode: set" $PROFILE_OUT >> $ACC_OUT && retval=0
 	# return to our working dir
 	popd > /dev/null
 	# return our return value
