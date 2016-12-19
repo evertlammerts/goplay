@@ -40,7 +40,7 @@ func (s *integratorServer) polynomial(p *pb.STPolynomial) func(float64) float64 
 // interval, using the given amount of strips
 func (s *integratorServer) SingleTermPolynomialIntegral(ctx context.Context, q *pb.Query) (*pb.IntegralEstimate, error) {
 	return &pb.IntegralEstimate{
-		Result: integral.Trapezoid(q.Def.NumStrips, q.Def.Start, q.Def.End, s.polynomial(q.Poly)),
+		Result: integral.Trapezoid(q.Conf.NumStrips, q.Conf.Start, q.Conf.End, s.polynomial(q.Poly)),
 	}, nil
 }
 
