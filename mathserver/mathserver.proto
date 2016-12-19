@@ -1,0 +1,43 @@
+// Proto file for our gRPC service
+
+syntax = "proto3";
+
+package mathserver;
+
+// exported interface
+service MathServer {
+  // Estimate the integral of the given single term polynomial at the given
+  // interval.
+  //
+  // Accepts a message that defines the polynomial and the integral definition.
+  // Returns the estimated value of the area under the curve.
+  rpc SingleTermPolynomialIntegral(Query) returns (IntegralEstimate) {}
+}
+
+// Compound query message
+message Query {
+  STPolynomial poly = 1;
+  IntegralDefinition def = 2;
+}
+
+// Estimated integral return message
+message IntegralEstimate {
+  double result = 1;
+}
+
+// Single term polynomials are defined by their degree and their constants.
+// I.e., -5x^3-43 is {Degree: 3, Constants: []int32{-5, 0, 0, -43}}
+message STPolynomial {
+  uint32 degree = 1;
+  repeated sint32 constants = 2;
+}
+
+// Definit integral estimates are defined by the amount of strips we create
+// under the curve and the start and end of the interval we measure the area
+// of.
+message IntegralDefinition {
+  int64 numStrips = 1;
+  double start = 2;
+  double end = 3;
+}
+
