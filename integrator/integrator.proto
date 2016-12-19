@@ -2,10 +2,10 @@
 
 syntax = "proto3";
 
-package mathserver;
+package integrator;
 
 // exported interface
-service MathServer {
+service Integrator {
   // Estimate the integral of the given single term polynomial at the given
   // interval.
   //
@@ -25,11 +25,11 @@ message IntegralEstimate {
   double result = 1;
 }
 
-// Single term polynomials are defined by their degree and their constants.
-// I.e., -5x^3-43 is {Degree: 3, Constants: []int32{-5, 0, 0, -43}}
+// Single term polynomials are defined by their constants. I.e., -5x^3-43 is
+// actually -5x^3+0x^2+0x^1-43X^0, which this message expresses as {Constants:
+// []int32{-5, 0, 0, -43}}
 message STPolynomial {
-  uint32 degree = 1;
-  repeated sint32 constants = 2;
+  repeated sint32 constants = 1;
 }
 
 // Definit integral estimates are defined by the amount of strips we create
